@@ -27,3 +27,22 @@ blockchain = [
 # Anthony's KelloggCoin balance is 2650
 
 # 👇👇👇 Your code HERE 👇👇👇
+balances = Hash.new(0)
+
+# Process transactions
+blockchain.each do |transaction|
+  from_user = transaction["from_user"]
+  to_user = transaction["to_user"]
+  amount = transaction["amount"]
+
+  # Deduct from sender if not from the ICO
+  balances[from_user] -= amount if from_user
+
+  # Add to receiver
+  balances[to_user] += amount
+end
+
+# Print balances
+balances.each do |user, balance|
+  puts "#{user.capitalize}'s KelloggCoin balance is #{balance}" if user
+end
